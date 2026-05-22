@@ -1,0 +1,178 @@
+<html>
+<head>
+    <title>Tip Calculator - CA2</title>
+
+    <style>
+        /* 1. The Main Page Background */
+        body {
+            background-color: #E8BEAC; /* Teacher asks to change background? Change this hex code! */
+            font-family: Arial, sans-serif; /* Makes the text look modern */
+            text-align: center;
+        }
+
+        /* 2. The Main White Container */
+        table.main-container {
+            background-color: #FFFFFF;
+            width: 600px;
+            margin-left: auto;   /* This centers the table horizontally */
+            margin-right: auto;  /* This centers the table horizontally */
+            border: 2px solid black;
+            border-radius: 10px; /* Rounds the corners of the main box */
+        }
+
+        /* 3. The Main Heading */
+        h1 {
+            color: #003366; /* Teacher asks to change title color? Change this! */
+        }
+
+        /* 4. The Form Text */
+        label, p, li {
+            color: #333333;
+            font-size: 16px;
+        }
+
+        /* 5. The Results Box */
+        table.results-container {
+            background-color: #D4EDDA; /* Light green background */
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+        }
+
+        /* 6. The Buttons */
+        input[type="button"] {
+            background-color: #003366; /* Dark blue button background */
+            color:#FFFFFF;            /* White button text */
+            padding: 10px 15px;        /* Makes the button thicker */
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+       input[type="reset"]{
+            background-color: #003366; /* Dark blue button background */
+            color:#FFFFFF;            /* White button text */
+            padding: 10px 15px;        /* Makes the button thicker */
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+         }
+          
+        /* Bonus: Makes the button change color when the mouse hovers over it! */
+        input[type="button"]:hover {
+            background-color: #00509e; 
+        }
+         input[type="reset"]:hover{
+            background-color: #00509e; 
+        }
+
+        
+    </style>
+    </head>
+
+<body>
+    <br>
+    
+    <table class="main-container" cellpadding="20" cellspacing="0">
+        <tr>
+            <td align="center">
+                
+                <img src="https://images.ctfassets.net/gnolt3j9rex6/Z1sjfwI-meta-image/0b4c5c09843968222798753bec28e077/streamline-your-restaurants-billing-process.jpg" alt="Restaurant bill and tip" width="550" height="150">
+
+                <h1>Tip Calculator</h1>
+
+                <p><b>Welcome to the easiest way to split your dining bill!</b></p>
+                <p><i>Simply enter your total amount, choose the service quality, and let "US" do the math for you.</i></p>
+                <br>
+
+                <form>
+                    <table align="center" border="0" cellpadding="10" cellspacing="0">
+                        <tr>
+                            <td align="right"><label><strong>Bill Amount (Rs):</strong></label></td>
+                            <td align="left"><input id="billAmount" type="number" placeholder="e.g. 1000"></td>
+                        </tr>
+                        <tr>
+                            <td align="right"><label><strong>Service Quality:</strong></label></td>
+                            <td align="left">
+                                <select id="serviceQuality">
+                                    <option value="0.15">15% - Outstanding</option>
+                                    <option value="0.10">10% - Good</option>
+                                    <option value="0.05">05% - It was OK</option>
+                                    <option value="0.0001">0.01% - Bad</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right"><label><strong>Number of People:</strong></label></td>
+                            <td align="left"><input id="numberOfPeople" type="number" placeholder="e.g. 1"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <input type="reset" value="Clear Form">
+                            </td>
+                            <td align="left">
+                                <input type="button" value="Calculate Tip" onclick="calculateTip()">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <br>
+                
+                <table class="results-container" cellpadding="15" cellspacing="0">
+                    <tr>
+                        <td align="center">
+                            <h2><u>Your Results</u></h2>
+                            <p style="font-size: 20px;">Tip Amount Per Person: <strong id="tipResult">Rs 0.00</strong></p>
+                            <p style="font-size: 20px;">Total Bill Per Person: <strong id="totalResult">Rs 0.00</strong></p>
+                        </td>
+                    </tr>
+                </table>
+
+                <br>
+                <h2><u>How It Works</u></h2>
+                
+                <ul type="square" align="left">
+                    <li><strong>Enter</strong> the total bill amount.</li>
+                    <li><em>Select</em> the tip percentage based on your experience.</li>
+                    <li><strong>Provide</strong> the number of people sharing the bill.</li>
+                    <li><strong>Click Calculate</strong> to trigger the JavaScript function!</li>
+                </ul>
+                
+                <br>
+                <p><a href="#">Back to top</a></p>
+                <p><strong>Thank you for visiting</strong></p>
+
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        function calculateTip() {
+            let billAmount = document.getElementById("billAmount").value;
+            let serviceQuality = document.getElementById("serviceQuality").value;
+            let numberOfPeople = document.getElementById("numberOfPeople").value;
+
+            if (billAmount === "" || billAmount <= 0) {
+                alert("Please enter a valid Bill Amount!");
+                return; 
+            }
+
+            if (numberOfPeople === "" || numberOfPeople <= 1) {
+                numberOfPeople = 1;
+            }
+
+            let totalTip = billAmount * serviceQuality; 
+            let tipPerPerson = totalTip / numberOfPeople;
+            let totalPerPerson = (parseFloat(billAmount) + totalTip) / numberOfPeople;
+
+            tipPerPerson = tipPerPerson.toFixed(2);
+            totalPerPerson = totalPerPerson.toFixed(2);
+
+            document.getElementById("tipResult").innerHTML = "Rs " + tipPerPerson;
+            document.getElementById("totalResult").innerHTML = "Rs " + totalPerPerson;
+        }
+    </script>
+</body>
+</html>
